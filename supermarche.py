@@ -1,14 +1,24 @@
 import pygame
 
+
 pygame.init()
 
 pygame.display.set_caption('Supermarché')
-fenetre = pygame.display.set_mode((1920, 1080))
+largeur = 1920
+hauteur = 1080
+fenetre = pygame.display.set_mode((largeur, hauteur))
 arriere_plan = pygame.image.load('Fenetre/supermarche/mycollection/png/fond_supermarché.jpg')
-Ecran = fenetre.blit(arriere_plan, (0, 0))
+arriere_plan_2 = pygame.image.load('Fenetre/supermarche/mycollection/png/fond_supermarche_flou.png')
+bouton_commencer = pygame.image.load('Fenetre/supermarche/mycollection/png/Bouton_Commencer.jpg')
+bouton_commencer = pygame.transform.scale(bouton_commencer, (300, 100))
+bouton_commencer_rect = bouton_commencer.get_rect()
+bouton_commencer_rect.center = (largeur / 2, (hauteur - hauteur / 6) - 10)
 
-Bouton_Commencer = pygame.Rect((1920 * (2 / 5)), 840, 400, 100)
-pygame.draw.rect(fenetre, (0, 0, 0), Bouton_Commencer)
+
+
+
+Ecran = fenetre.blit(arriere_plan, (0, 0))
+fenetre.blit(bouton_commencer, bouton_commencer_rect)
 
 boucle = True
 
@@ -20,7 +30,8 @@ while boucle:
             boucle = False
             pygame.quit()
 
-        elif event.type == pygame.MOUSEMOTION:
-
-            if Bouton_Commencer.collidepoint(event.pos):
-                print(event.rel)
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            if bouton_commencer_rect.collidepoint(event.pos):
+                Ecran = fenetre.blit(arriere_plan_2, (0, 0))
+                pygame.display.flip()
+            elif
