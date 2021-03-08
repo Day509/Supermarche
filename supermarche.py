@@ -118,13 +118,13 @@ while boucle:
 
                 if bouton_valider_panier_rect.collidepoint(event.pos):
                     Ecran = fenetre.blit(arriere_plan_3, (0, 0))
-                    for i in panier:
-                        prix_totale += prix_article[i] * panier[i]
+                    for i in range(len(panier)):
+                        prix_totale += (panier[i] * prix_article[i])
 
                     panier_fini = police_panier_fini.render(
-                        "Votre panier final est fini, Vous devez réglé: " + str(prix_totale) + "€", True, (0, 0, 0))
+                        "Votre panier est rempli, Vous devez réglé: " + str(prix_totale) + "€", True, (0, 0, 0))
 
-                    fenetre.blit(panier_fini, ((largeur/3)-80, (hauteur/2)-200))
+                    fenetre.blit(panier_fini, ((largeur / 3) - 80, (hauteur / 2) - 200))
 
                 elif charcuterie_rect.collidepoint(event.pos):
                     panier[0] += 1
@@ -146,3 +146,5 @@ while boucle:
 
                 elif poisson_rect.collidepoint(event.pos):
                     panier[6] += 1
+
+print(panier)
