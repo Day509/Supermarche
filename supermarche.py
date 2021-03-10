@@ -54,7 +54,7 @@ panier = [0, 0, 0, 0, 0, 0, 0]
 print(panier)
 
 prix_article = [4.0, 1.0, 1.5, 3.5, 3.7, 2.3, 2.1]
-prix_totale = 0
+montant_totale = 0
 porte_monnaie = random.randint(0, 100)
 print(porte_monnaie)
 
@@ -128,18 +128,18 @@ while boucle:
                 if bouton_valider_panier_rect.collidepoint(event.pos):
                     Ecran = fenetre.blit(arriere_plan_3, (0, 0))
                     for i in range(len(panier)):
-                        prix_totale += (panier[i] * prix_article[i])
+                        montant_totale += (panier[i] * prix_article[i])
 
-                    if (prix_totale >= (prix_totale - 15)) & (prix_totale <= porte_monnaie):
+                    if (montant_totale >= (porte_monnaie - 15)) & (montant_totale <= porte_monnaie):
                         panier_fini = police_panier_fini.render(
-                            "Bravo, vous avez respecté le budget, votre panier vaut: " + str(prix_totale) + "€", True,
+                            "Bravo, vous avez respecté le budget, votre panier vaut: " + str(montant_totale) + "€", True,
                             (0, 0, 0))
 
                         fenetre.blit(panier_fini, ((largeur / 5), (hauteur / 2) - 200))
                     else:
                         panier_fini = police_panier_fini.render(
                             "Mince, vous n'avez pas respecté votre budget, votre panier vaut: " + str(
-                                prix_totale) + "€", True, (0, 0, 0))
+                                montant_totale) + "€", True, (0, 0, 0))
 
                         fenetre.blit(panier_fini, ((largeur / 5 - 80), (hauteur / 2) - 200))
 
