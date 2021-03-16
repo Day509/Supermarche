@@ -17,6 +17,16 @@ bouton_commencer = pygame.transform.scale(bouton_commencer, (300, 100))
 bouton_commencer_rect = bouton_commencer.get_rect()
 bouton_commencer_rect.center = (largeur / 2, (hauteur - hauteur / 6) - 10)
 
+bouton_recommencer = pygame.image.load('mycollection/png/bouton_recommencer.png')
+bouton_recommencer = pygame.transform.scale(bouton_recommencer, (250, 100))
+bouton_recommencer_rect = bouton_recommencer.get_rect()
+bouton_recommencer_rect.center = ((largeur / 2) - 200, (hauteur - hauteur / 6) - 10)
+
+bouton_quitter = pygame.image.load('mycollection/png/bouton_quitter.png')
+bouton_quitter = pygame.transform.scale(bouton_quitter, (250, 100))
+bouton_quitter_rect = bouton_quitter.get_rect()
+bouton_quitter_rect.center = ((largeur / 2) + 200, (hauteur - hauteur / 6) - 10)
+
 bouton_valider_panier = pygame.image.load('mycollection/png/bouton_valider_panier.png')
 bouton_valider_panier = pygame.transform.scale(bouton_valider_panier, (120, 50))
 bouton_valider_panier_rect = bouton_valider_panier.get_rect()
@@ -77,6 +87,7 @@ Ecran = fenetre.blit(arriere_plan, (0, 0))
 fenetre.blit(bouton_commencer, bouton_commencer_rect)
 
 etape2 = False
+etape3 = False
 boucle = True
 
 while boucle:
@@ -126,22 +137,9 @@ while boucle:
                 fenetre.blit(poisson_panier_police, (1757, coord_y_article + 180))
 
                 if bouton_valider_panier_rect.collidepoint(event.pos):
+                    etape2 = False
+                    etape3 = True
                     Ecran = fenetre.blit(arriere_plan_3, (0, 0))
-                    for i in range(len(panier)):
-                        montant_totale += (panier[i] * prix_article[i])
-
-                    if (montant_totale >= (porte_monnaie - 15)) & (montant_totale <= porte_monnaie):
-                        panier_fini = police_panier_fini.render(
-                            "Bravo, vous avez respecté le budget, votre panier vaut: " + str(montant_totale) + "€", True,
-                            (0, 0, 0))
-
-                        fenetre.blit(panier_fini, ((largeur / 5), (hauteur / 2) - 200))
-                    else:
-                        panier_fini = police_panier_fini.render(
-                            "Mince, vous n'avez pas respecté votre budget, votre panier vaut: " + str(
-                                montant_totale) + "€", True, (0, 0, 0))
-
-                        fenetre.blit(panier_fini, ((largeur / 5 - 80), (hauteur / 2) - 200))
 
                 elif charcuterie_rect.collidepoint(event.pos):
                     panier[0] += 1
@@ -164,4 +162,32 @@ while boucle:
                 elif poisson_rect.collidepoint(event.pos):
                     panier[6] += 1
 
+            if etape3:
+                for i in range(len(panier)):
+                    montant_totale += (panier[i] * prix_article[i])
+
+                if (montant_totale >= (porte_monnaie - 15)) & (montant_totale <= porte_monnaie):
+                    panier_fini = police_panier_fini.render("Bravo, vous avez respecté le budget, votre panier vaut: " + str(montant_totale) + "€", True, (0, 0, 0))
+
+                    fenetre.blit(panier_fini, ((largeur / 5), (hauteur / 2) - 200))
+                else:
+                    panier_fini = police_panier_fini.render("Mince, vous n'avez pas respecté votre budget, votre panier vaut: " + str(montant_totale) + "€", True, (0, 0, 0))
+
+                    fenetre.blit(panier_fini, ((largeur / 5 - 80), (hauteur / 2) - 200))
+
+                fenetre.blit(bouton_recommencer, bouton_recommencer_rect)
+                fenetre.blit(bouton_quitter, bouton_quitter_rect)
+
+                if bouton_recommencer_rect.collidepoint(event.pos):
+                    for i in range(len(panier)):
+                        panier[i] = 0
+
+                    etape2 = True
+                    etape3 = False
+
+                elif bouton_quitter_rect.collidepoint(event.pos):
+                    boucle = False
+
+pygame.quit()
 print(panier)
+
