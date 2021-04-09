@@ -137,6 +137,8 @@ while boucle:
                 fenetre.blit(poisson_panier_police, (1757, coord_y_article + 180))
 
                 if bouton_valider_panier_rect.collidepoint(event.pos):
+                    for i in range(len(panier)):
+                        montant_totale += (panier[i] * prix_article[i])
                     etape2 = False
                     etape3 = True
                     Ecran = fenetre.blit(arriere_plan_3, (0, 0))
@@ -163,15 +165,17 @@ while boucle:
                     panier[6] += 1
 
             if etape3:
-                for i in range(len(panier)):
-                    montant_totale += (panier[i] * prix_article[i])
 
                 if (montant_totale >= (porte_monnaie - 15)) & (montant_totale <= porte_monnaie):
-                    panier_fini = police_panier_fini.render("Bravo, vous avez respecté le budget, votre panier vaut: " + str(montant_totale) + "€", True, (0, 0, 0))
+                    panier_fini = police_panier_fini.render(
+                        "Bravo, vous avez respecté le budget, votre panier vaut: " + str(montant_totale) + "€", True,
+                        (0, 0, 0))
 
                     fenetre.blit(panier_fini, ((largeur / 5), (hauteur / 2) - 200))
-                else:
-                    panier_fini = police_panier_fini.render("Mince, vous n'avez pas respecté votre budget, votre panier vaut: " + str(montant_totale) + "€", True, (0, 0, 0))
+                elif (montant_totale > porte_monnaie) | ((montant_totale < porte_monnaie-15) & (montant_totale >= 0)):
+                    panier_fini = police_panier_fini.render(
+                        "Mince, vous n'avez pas respecté votre budget, votre panier vaut: " + str(montant_totale) + "€",
+                        True, (0, 0, 0))
 
                     fenetre.blit(panier_fini, ((largeur / 5 - 80), (hauteur / 2) - 200))
 
@@ -182,12 +186,13 @@ while boucle:
                     for i in range(len(panier)):
                         panier[i] = 0
 
-                    etape2 = True
+                    porte_monnaie = random.randint(0, 100)
+                    montant_totale = 0
                     etape3 = False
+                    etape2 = True
 
                 elif bouton_quitter_rect.collidepoint(event.pos):
                     boucle = False
 
 pygame.quit()
 print(panier)
-
